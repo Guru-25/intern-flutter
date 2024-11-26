@@ -1,0 +1,46 @@
+name: kathiravan_fireworks
+description: "Kathiravan Fireworks"
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  mongo_dart: ^0.9.1
+  shared_preferences: ^2.2.2
+  mailer: ^6.0.1
+  cupertino_icons: ^1.0.2
+  provider: ^6.1.1
+  url_launcher: ^6.2.4
+  google_fonts: ^6.1.0
+  http: ^1.2.0
+  icons_plus: ^5.0.0
+  flutter_dotenv: ^5.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+  flutter_lints: ^5.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/images/logo.png
+    - .env
