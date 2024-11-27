@@ -110,10 +110,26 @@ class _CartState extends State<Cart> {
                 }
               }
             : null, // Disable button when cart is empty
-          child: TextBuilder(
-            text: cart.itemCount > 0 ? 'Proceed to Checkout' : 'Cart is Empty',
+          child: cart.itemCount > 0
+    ? Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextBuilder(
+            text: '₹ ${cart.totalPrice()}',
             color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
+          const SizedBox(width: 10.0),
+          const TextBuilder(
+            text: 'Checkout Order',
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+          ),
+        ],
+      )
+    : SizedBox.shrink(),
         ),
       ),
     );
