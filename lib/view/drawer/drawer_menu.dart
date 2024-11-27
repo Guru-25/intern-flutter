@@ -34,8 +34,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TextBuilder(text: RawString.appName, fontSize: 15.0, fontWeight: FontWeight.bold),
-                            TextBuilder(text: RawString.dummyEmail, fontSize: 15.0, fontWeight: FontWeight.normal),
+                            TextBuilder(text: RawString.appName, fontSize: 25.0, fontWeight: FontWeight.bold),
+                            TextBuilder(text: RawString.dummyEmail, fontSize: 20.0, fontWeight: FontWeight.normal),
                           ],
                         ),
                       ],
@@ -76,7 +76,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                         ),
                         ListTile(
                           onTap: () {
-                            UrlLaunch.makeEmail(email: RawString.website, body: 'Hello,', subject: 'Can we Talk?');
+                            UrlLaunch.launchInBrowser(urlString: "https://kathiravanfireworks.com/Home/Contact");
                           },
                           leading: const Icon(
                             Icons.email,

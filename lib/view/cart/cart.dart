@@ -57,70 +57,62 @@ class _CartState extends State<Cart> {
         padding: const EdgeInsets.all(8.0),
         child: MaterialButton(
           height: 60,
-          color: Colors.black,
+          color: cart.itemCount > 0 ? Colors.black : Colors.grey, // Disable color when empty
           minWidth: size.width,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          // Update cart.dart onPressed handler:
-          onPressed: () async {
-            final result = await showDialog<OrderDetails>(
-              context: context,
-              builder: (context) => PaymentForm(
-                totalAmount: cart.totalPrice().toDouble(),
-                items: cart.items,
-              ),
-            );
-
-            if (result != null) {
-              try {
-                // Show loading indicator
-                showDialog(
+          onPressed: cart.itemCount > 0 
+            ? () async {
+                final result = await showDialog<OrderDetails>(
                   context: context,
-                  barrierDismissible: false,
-                  builder: (context) => const Center(child: CircularProgressIndicator()),
-                );
-                
-                // Send email
-                await EmailService.sendOrderConfirmation(result);
-                
-                // Close loading indicator
-                Navigator.pop(context);
-                
-                // Clear cart and show success message
-                cart.clearCart();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.green,
-                    content: Text('Order ${result.orderNumber} has been successfully placed! Email sent.'),
+                  builder: (context) => PaymentForm(
+                    totalAmount: cart.totalPrice().toDouble(),
+                    items: cart.items,
                   ),
                 );
-              } catch (e) {
-                // Close loading indicator
-                Navigator.pop(context);
-                
-                // Show error message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.red,
-                    content: Text('Order confirmed but failed to send email: $e'),
-                  ),
-                );
+
+                if (result != null) {
+                  try {
+                    // Show loading indicator
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => const Center(child: CircularProgressIndicator()),
+                    );
+                    
+                    // Send email
+                    await EmailService.sendOrderConfirmation(result);
+                    
+                    // Close loading indicator
+                    Navigator.pop(context);
+                    
+                    // Clear cart and show success message
+                    cart.clearCart();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.green,
+                        content: Text('Order ${result.orderNumber} has been successfully placed! Email sent.'),
+                      ),
+                    );
+                  } catch (e) {
+                    // Close loading indicator
+                    Navigator.pop(context);
+                    
+                    // Show error message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.red,
+                        content: Text('Order confirmed but failed to send email: $e'),
+                      ),
+                    );
+                  }
+                }
               }
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextBuilder(text: '₹ ${cart.totalPrice()}', color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
-              const SizedBox(width: 10.0),
-              const TextBuilder(
-                text: 'Checkout Order',
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-              ),
-            ],
+            : null, // Disable button when cart is empty
+          child: TextBuilder(
+            text: cart.itemCount > 0 ? 'Proceed to Checkout' : 'Cart is Empty',
+            color: Colors.white,
           ),
         ),
       ),

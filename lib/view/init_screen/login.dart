@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
               CustomTextField(
                 controller: _emailController,
                 labelText: 'Email',
-                hintText: 'mail@gururaja.in',
+                hintText: 'Email',
                 prefixIcon: Icons.email,
               ),
               const SizedBox(height: 20.0),

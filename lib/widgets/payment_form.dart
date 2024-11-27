@@ -36,17 +36,22 @@ class _PaymentFormState extends State<PaymentForm> {
   }
 
   Future<void> _loadSavedInfo() async {
-    final savedInfo = await PaymentInfoService.getPaymentInfo();
-    if (savedInfo != null) {
-      setState(() {
-        _nameController.text = savedInfo.name;
-        _addressController.text = savedInfo.address;
-        _cityController.text = savedInfo.city;
-        _stateController.text = savedInfo.state;
-        _zipController.text = savedInfo.zip;
-        _mobileController.text = savedInfo.mobile;
-        _emailController.text = savedInfo.email;
-      });
+    try {
+      final savedInfo = await PaymentInfoService.getPaymentInfo();
+      if (savedInfo != null && mounted) {
+        setState(() {
+          _nameController.text = savedInfo.name;
+          _addressController.text = savedInfo.address;
+          _cityController.text = savedInfo.city;
+          _stateController.text = savedInfo.state;
+          _zipController.text = savedInfo.zip;
+          _mobileController.text = savedInfo.mobile;
+          _emailController.text = savedInfo.email;
+        });
+        print('Loaded saved info successfully');
+      }
+    } catch (e) {
+      print('Error loading saved info: $e');
     }
   }
 
@@ -320,9 +325,15 @@ class _PaymentFormState extends State<PaymentForm> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
+                    // In the ElevatedButton onPressed callback in PaymentForm
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _saveFormData();
+                        
+                        // Verify the data was saved
+                        final verified = await PaymentInfoService.getPaymentInfo();
+                        print('Verification after save: ${verified?.toJson()}');
+                        
                         final orderNumber = 'ORD${DateTime.now().millisecondsSinceEpoch}';
                         Navigator.pop(
                           context,

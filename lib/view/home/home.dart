@@ -14,7 +14,12 @@ class _HomeState extends State<Home> {
   Future<List<ProductModel>>? futureProduct;
   String _searchQuery = '';
   String? _selectedCategory;
-  final List<String> categories = ['All', 'Ground Chakkers','Candles','Sound Crackers','Rockets','Gift Box','Bombs','Sparklers','Flowerpots', 'MultiShots' , 'Atom Bomb' , 'Wala Crackers'];
+  String? _selectedPriceRange;
+  final List<String> categories = [
+    'All', 'Ground Chakkers', 'Candles', 'Sound Crackers', 'Rockets', 'Gift Box',
+    'Bombs', 'Sparklers', 'Flowerpots', 'MultiShots', 'Atom Bomb', 'Wala Crackers'
+  ];
+  final List<String> priceRanges = ['Below ₹200', '₹200 - ₹500', 'Above ₹1000'];
 
   Future<List<ProductModel>> fetchProducts() async {
     List<ProductModel> products = [];
@@ -22,21 +27,13 @@ class _HomeState extends State<Home> {
     var request = http.Request('GET', Uri.parse(baseUrl));
 
     http.StreamedResponse response = await request.send();
-    var responseBody = await response.stream.bytesToString(); // Store the response body
+    var responseBody = await response.stream.bytesToString();
 
     if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print(responseBody);
-      }
       final jsonData = jsonDecode(responseBody);
       products = jsonData.map<ProductModel>((e) => ProductModel.fromJson(e)).toList();
-      setState(() {}); // Assuming this is within a Stateful widget
-
       return products;
     } else {
-      if (kDebugMode) {
-        print(response.reasonPhrase);
-      }
       return [];
     }
   }
@@ -45,7 +42,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     futureProduct = fetchProducts();
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   Widget _buildSearchAndFilter() {
@@ -97,17 +93,49 @@ class _HomeState extends State<Home> {
             },
           ),
         ),
+        SizedBox(
+          height: 50,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: priceRanges.length,
+            itemBuilder: (context, index) {
+              final priceRange = priceRanges[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: FilterChip(
+                  selected: _selectedPriceRange == priceRange,
+                  label: Text(priceRange),
+                  onSelected: (selected) {
+                    setState(() {
+                      _selectedPriceRange = selected ? priceRange : null;
+                    });
+                  },
+                  selectedColor: Colors.red.withOpacity(0.2),
+                  checkmarkColor: Colors.red,
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
 
   List<ProductModel> getFilteredProducts(List<ProductModel> products) {
     return products.where((product) {
-      final matchesSearch = product.title!.toLowerCase().contains(_searchQuery.toLowerCase());
-      final matchesCategory = _selectedCategory == null || 
-                            _selectedCategory == 'All' || 
-                            product.category == _selectedCategory;
-      return matchesSearch && matchesCategory;
+      final matchesSearch =
+          product.title!.toLowerCase().contains(_searchQuery.toLowerCase());
+      final matchesCategory = _selectedCategory == null ||
+          _selectedCategory == 'All' ||
+          product.category == _selectedCategory;
+      final matchesPriceRange = _selectedPriceRange == null ||
+          (_selectedPriceRange == 'Below ₹200' && product.price! < 200) ||
+          (_selectedPriceRange == '₹200 - ₹500' &&
+              product.price! >= 200 &&
+              product.price! <= 500) ||
+          (_selectedPriceRange == 'Above ₹1000' && product.price! > 1000);
+
+      return matchesSearch && matchesCategory && matchesPriceRange;
     }).toList();
   }
 
@@ -118,9 +146,7 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       drawer: const DrawerMenu(),
       appBar: AppBar(
-        title: Center(
-  child: const AppNameWidget(),
-),
+        title: const Center(child: AppNameWidget()),
         actions: [
           IconButton(
             onPressed: () {
@@ -128,13 +154,10 @@ class _HomeState extends State<Home> {
             },
             icon: Stack(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: cart.itemCount != 0 ? 8 : 0, right: cart.itemCount != 0 ? 8 : 0),
-                  child: const Icon(
-                    Icons.shopping_cart,
-                    color: Colors.black,
-                    size: 30,
-                  ),
+                const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.black,
+                  size: 30,
                 ),
                 if (cart.itemCount != 0)
                   Positioned(
@@ -144,7 +167,10 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
+                      ),
                       child: TextBuilder(
                         text: cart.itemCount.toString(),
                         color: Colors.white,
@@ -152,10 +178,10 @@ class _HomeState extends State<Home> {
                         fontSize: 10,
                       ),
                     ),
-                  )
+                  ),
               ],
             ),
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -177,9 +203,7 @@ class _HomeState extends State<Home> {
                         crossAxisSpacing: 15,
                       ),
                       itemCount: getFilteredProducts(products).length,
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemBuilder: (BuildContext context, int i) {
+                      itemBuilder: (context, i) {
                         final product = getFilteredProducts(products)[i];
                         return ProductCard(product: product);
                       },
@@ -197,3 +221,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
