@@ -1,4 +1,5 @@
 import 'package:kathiravan_fireworks/imports.dart';
+import 'package:kathiravan_fireworks/services/session_service.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({super.key});
@@ -155,6 +156,29 @@ onTap: () {
                             ),
                             title: TextBuilder(text: "About", fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.black),
                           ),
+                        ),
+                        SizedBox(height: 16),
+                        Divider(thickness: 1),
+                        ListTile(
+                          leading: Icon(Icons.logout, color: Colors.red),
+                          title: Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          onTap: () async {
+                            await SessionService.clearSession();
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context) => const Login()),
+                                (route) => false,
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),

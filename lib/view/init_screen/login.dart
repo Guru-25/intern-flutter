@@ -1,5 +1,6 @@
 import 'package:kathiravan_fireworks/imports.dart';
 import 'package:kathiravan_fireworks/services/auth_service.dart';
+import 'package:kathiravan_fireworks/services/session_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +18,19 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    if (await SessionService.isLoggedIn()) {
+      // Navigate to home if already logged in
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+        );
+      }
+    }
   }
 
   Future<void> _handleLogin() async {
@@ -43,6 +57,9 @@ class _LoginState extends State<Login> {
       );
 
       if (success) {
+        // Save session
+        await SessionService.saveLoginSession(_emailController.text);
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login successful!'),
@@ -51,10 +68,9 @@ class _LoginState extends State<Login> {
         );
         await Future.delayed(const Duration(seconds: 1));
         if (mounted) {
-          Navigator.pushAndRemoveUntil(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (_) => const Home()),
-            (route) => false,
           );
         }
       } else {
