@@ -6,7 +6,6 @@ class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginState createState() => _LoginState();
 }
 
@@ -23,7 +22,6 @@ class _LoginState extends State<Login> {
 
   Future<void> _checkLoginStatus() async {
     if (await SessionService.isLoggedIn()) {
-      // Navigate to home if already logged in
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -34,7 +32,6 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _handleLogin() async {
-    // Debug prints
     print('Email: ${_emailController.text}');
     print('Password: ${_passwordController.text}');
 
@@ -57,7 +54,6 @@ class _LoginState extends State<Login> {
       );
 
       if (success) {
-        // Save session
         await SessionService.saveLoginSession(_emailController.text);
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +86,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // total height and width of screen
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SafeArea(

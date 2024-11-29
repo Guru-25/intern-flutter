@@ -5,7 +5,6 @@ import 'package:kathiravan_fireworks/imports.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
   @override
-  // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
 }
 
@@ -23,7 +22,7 @@ class _HomeState extends State<Home> {
 
   Future<List<ProductModel>> fetchProducts() async {
     List<ProductModel> products = [];
-    const baseUrl = 'https://santhosh-1608.github.io/ProductData/products.json';
+    const baseUrl = 'https://gururaja.in/kathiravan/products';
     var request = http.Request('GET', Uri.parse(baseUrl));
 
     http.StreamedResponse response = await request.send();

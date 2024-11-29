@@ -5,7 +5,6 @@ class DrawerMenu extends StatefulWidget {
   const DrawerMenu({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _DrawerMenuState createState() => _DrawerMenuState();
 }
 
@@ -86,68 +85,68 @@ class _DrawerMenuState extends State<DrawerMenu> {
                           title: const TextBuilder(text: "Contact", fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                         InkWell(
-                          // Update the about dialog content in drawer_menu.dart
-onTap: () {
-  Navigator.pop(context);
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('About Kathiravan Crackers'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'Premium Quality, Unbeatable Prices',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 12),
-            Text(
-              'Discover the best crackers online in India at unbelievable prices, exclusively at Kathiravan Crackers. We are committed to providing authentic Sivakasi fireworks, ensuring a spectacular celebration at exceptional value.',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Nationwide Distribution',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 12),
-            Text(
-              'Whether you\'re in Bangalore, Chennai, Hyderabad, Coimbatore, Salem, Kerala, or any part of Tamil Nadu or India, Kathiravan Crackers reaches you with our swift and efficient distribution network.',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Years of Excellence',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 12),
-            Text(
-              'With a legacy spanning over 10+ years, Kathiravan Crackers stands tall as one of the leading manufacturers of crackers and fireworks in India. Our dedication lies in offering the finest products and services to our valued customers.',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Close'),
-        ),
-      ],
-    ),
-  );
-},
+                          
+                          onTap: () {
+                            Navigator.pop(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('About Kathiravan Crackers'),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        'Premium Quality, Unbeatable Prices',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Text(
+                                        'Discover the best crackers online in India at unbelievable prices, exclusively at Kathiravan Crackers. We are committed to providing authentic Sivakasi fireworks, ensuring a spectacular celebration at exceptional value.',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      SizedBox(height: 16),
+                                      Text(
+                                        'Nationwide Distribution',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Text(
+                                        'Whether you\'re in Bangalore, Chennai, Hyderabad, Coimbatore, Salem, Kerala, or any part of Tamil Nadu or India, Kathiravan Crackers reaches you with our swift and efficient distribution network.',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      SizedBox(height: 16),
+                                      Text(
+                                        'Years of Excellence',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Text(
+                                        'With a legacy spanning over 10+ years, Kathiravan Crackers stands tall as one of the leading manufacturers of crackers and fireworks in India. Our dedication lies in offering the finest products and services to our valued customers.',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Close'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                           child: const ListTile(
                             leading: Icon(
                               Icons.info,

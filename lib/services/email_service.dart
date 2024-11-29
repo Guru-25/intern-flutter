@@ -1,4 +1,4 @@
-// lib/services/email_service.dart
+
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:kathiravan_fireworks/model/order_details.dart';
@@ -6,15 +6,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EmailService {
   static Future<void> sendOrderConfirmation(OrderDetails order) async {
-    // Use SmtpServer with specific security settings
     final smtpServer = SmtpServer(
       dotenv.env['EMAIL_SERVER'] ?? '',
       port: 587,
-      username: dotenv.env['EMAIL_USERNAME'] ?? '', // Add full email address
+      username: dotenv.env['EMAIL_USERNAME'] ?? '',
       password: dotenv.env['EMAIL_PASSWORD'] ?? '',
-      ignoreBadCertificate: true, // Add this for development
-      ssl: false, // Change to false for STARTTLS
-      allowInsecure: true, // Add this for debugging
+      ignoreBadCertificate: true,
+      ssl: false,
+      allowInsecure: true,
     );
 
     final message = Message()

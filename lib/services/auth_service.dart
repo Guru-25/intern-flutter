@@ -50,7 +50,6 @@ class AuthService {
   }
 
   static String _generateToken(String userId) {
-    // In production, use a proper JWT token generation
-    return DateTime.now().millisecondsSinceEpoch.toString() + '_' + userId;
+    return '${DateTime.now().millisecondsSinceEpoch}_$userId';
   }
 }

@@ -2,14 +2,12 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MongoDBService {
-  // Remove const and make it late
   static late String MONGO_URL;
   static const String USER_COLLECTION = "users";
   static late Db _db;
 
   static Future<void> connect() async {
     try {
-      // Initialize MONGO_URL here
       MONGO_URL = dotenv.env['MONGO_URL'] ?? '';
       if (MONGO_URL.isEmpty) {
         throw Exception('MONGO_URL not found in environment');
@@ -49,7 +47,6 @@ class MongoDBService {
   }
 
   static String _hashPassword(String password) {
-    // In production, use proper password hashing like bcrypt
     return password; 
   }
 }

@@ -3,9 +3,9 @@ import 'package:kathiravan_fireworks/imports.dart';
 class CartCard extends StatelessWidget {
   final CartModel cart;
   const CartCard({
-    Key? key,
+    super.key,
     required this.cart,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

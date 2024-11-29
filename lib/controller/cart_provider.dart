@@ -12,7 +12,6 @@ class CartProvider with ChangeNotifier {
   void addItem(CartModel cartModel) {
     int index = _items.indexWhere((item) => item.id == cartModel.id);
     if (index != -1) {
-      // Item already exists, update quantity and price
       CartModel existingItem = _items[index];
       CartModel updatedItem = existingItem.copyWith(
         quantity: existingItem.quantity! + cartModel.quantity!,
@@ -20,7 +19,6 @@ class CartProvider with ChangeNotifier {
       );
       _items[index] = updatedItem;
     } else {
-      // Item doesn't exist, add it to the list
       _items.add(cartModel);
     }
     notifyListeners();

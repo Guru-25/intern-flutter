@@ -5,7 +5,6 @@ class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterState createState() => _RegisterState();
 }
 
@@ -68,7 +67,6 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    // total height and width of screen
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SafeArea(

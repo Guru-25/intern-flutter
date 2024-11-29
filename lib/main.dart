@@ -10,7 +10,6 @@ Future<void> main() async {
     runApp(const MyApp());
   } catch (e) {
     print('Error loading environment: $e');
-    // Provide fallback or error handling
   }
 }
 

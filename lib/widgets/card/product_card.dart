@@ -111,7 +111,6 @@ class ProductCard extends StatelessWidget {
                                 quantity: 1,
                                 totalPrice: product.price!);
                             cart.addItem(cartModel);
-                            // cart.addItem(product.id.toString(), product.title!, product.price, product.image!, product.category!);
                           },
                           icon: const Icon(Icons.add_shopping_cart_rounded),
                           color: Colors.red,

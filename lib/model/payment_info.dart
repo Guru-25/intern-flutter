@@ -1,4 +1,3 @@
-// lib/model/payment_info.dart
 class PaymentInfo {
   final String name;
   final String address;

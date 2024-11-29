@@ -7,7 +7,6 @@ class Cart extends StatefulWidget {
   const Cart({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _CartState createState() => _CartState();
 }
 
@@ -57,7 +56,7 @@ class _CartState extends State<Cart> {
         padding: const EdgeInsets.all(8.0),
         child: MaterialButton(
           height: 60,
-          color: cart.itemCount > 0 ? Colors.black : Colors.grey, // Disable color when empty
+          color: cart.itemCount > 0 ? Colors.black : Colors.grey,
           minWidth: size.width,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           onPressed: cart.itemCount > 0 
@@ -72,20 +71,16 @@ class _CartState extends State<Cart> {
 
                 if (result != null) {
                   try {
-                    // Show loading indicator
                     showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (context) => const Center(child: CircularProgressIndicator()),
                     );
                     
-                    // Send email
                     await EmailService.sendOrderConfirmation(result);
                     
-                    // Close loading indicator
                     Navigator.pop(context);
                     
-                    // Clear cart and show success message
                     cart.clearCart();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -95,10 +90,8 @@ class _CartState extends State<Cart> {
                       ),
                     );
                   } catch (e) {
-                    // Close loading indicator
                     Navigator.pop(context);
                     
-                    // Show error message
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         behavior: SnackBarBehavior.floating,
@@ -109,7 +102,7 @@ class _CartState extends State<Cart> {
                   }
                 }
               }
-            : null, // Disable button when cart is empty
+            : null,
           child: cart.itemCount > 0
     ? Row(
         mainAxisAlignment: MainAxisAlignment.center,
